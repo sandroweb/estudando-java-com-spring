@@ -14,20 +14,23 @@ public class Programa {
 		EntityManagerFactory emf = Persistence.createEntityManagerFactory("exemplo-jpa");
 		EntityManager em = emf.createEntityManager();
 		
-		Pessoa p1 = new Pessoa(null, "Sandro Santos", "sandro@sandrosantos.art.br");
-		Pessoa p2 = new Pessoa(null, "Mariana Pantoja", "mary@gmail.com");
-		Pessoa p3 = new Pessoa(null, "Maria Helena", "mudramail@gmail.com");
+//		Pessoa p1 = new Pessoa(null, "Sandro Santos", "sandro@sandrosantos.art.br");
+//		Pessoa p2 = new Pessoa(null, "Mariana Pantoja", "mary@gmail.com");
+//		Pessoa p3 = new Pessoa(null, "Maria Helena", "mudramail@gmail.com");
 		
 		/* grava dados */
-		em.getTransaction().begin();
-		em.persist(p1);
-		em.persist(p2);
-		em.persist(p3);
-		em.getTransaction().commit();
+//		em.getTransaction().begin();
+//		em.persist(p1);
+//		em.persist(p2);
+//		em.persist(p3);
+//		em.getTransaction().commit();
+
+		Pessoa p = em.find(Pessoa.class, 2);
+
+		System.out.println(p);
+		
 		em.close();
 		emf.close();
-
-		System.out.println("Pronto!");
 	}
 
 }
