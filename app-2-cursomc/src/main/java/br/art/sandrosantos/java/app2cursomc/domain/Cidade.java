@@ -28,7 +28,6 @@ public class Cidade implements Serializable {
 	
 	public Cidade() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 	
 	public Cidade(Integer id, String nome, Estado estado) {

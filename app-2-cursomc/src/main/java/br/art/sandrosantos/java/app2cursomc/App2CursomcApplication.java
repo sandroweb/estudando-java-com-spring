@@ -1,5 +1,6 @@
 package br.art.sandrosantos.java.app2cursomc;
 
+import java.text.SimpleDateFormat;
 import java.util.Arrays;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,13 +13,20 @@ import br.art.sandrosantos.java.app2cursomc.domain.Cidade;
 import br.art.sandrosantos.java.app2cursomc.domain.Cliente;
 import br.art.sandrosantos.java.app2cursomc.domain.Endereco;
 import br.art.sandrosantos.java.app2cursomc.domain.Estado;
+import br.art.sandrosantos.java.app2cursomc.domain.Pagamento;
+import br.art.sandrosantos.java.app2cursomc.domain.PagamentoComBoleto;
+import br.art.sandrosantos.java.app2cursomc.domain.PagamentoComCartao;
+import br.art.sandrosantos.java.app2cursomc.domain.Pedido;
 import br.art.sandrosantos.java.app2cursomc.domain.Produto;
+import br.art.sandrosantos.java.app2cursomc.domain.enums.EstadoPagamento;
 import br.art.sandrosantos.java.app2cursomc.domain.enums.TipoCliente;
 import br.art.sandrosantos.java.app2cursomc.repositories.CategoriaRepository;
 import br.art.sandrosantos.java.app2cursomc.repositories.CidadeRepository;
 import br.art.sandrosantos.java.app2cursomc.repositories.ClienteRepository;
 import br.art.sandrosantos.java.app2cursomc.repositories.EnderecoRepository;
 import br.art.sandrosantos.java.app2cursomc.repositories.EstadoRepository;
+import br.art.sandrosantos.java.app2cursomc.repositories.PagamentoRepository;
+import br.art.sandrosantos.java.app2cursomc.repositories.PedidoRepository;
 import br.art.sandrosantos.java.app2cursomc.repositories.ProdutoRepository;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
@@ -44,13 +52,18 @@ public class App2CursomcApplication implements CommandLineRunner {
 	@Autowired
 	private EnderecoRepository enderecoRepository;
 
+	@Autowired
+	private PedidoRepository pedidoRepository;
+
+	@Autowired
+	private PagamentoRepository pagamentoRepository;
+
 	public static void main(String[] args) {
 		SpringApplication.run(App2CursomcApplication.class, args);
 	}
 
 	@Override
 	public void run(String... args) throws Exception {
-		// TODO Auto-generated method stub
 
 		Categoria cat1 = new Categoria(null, "Informática");
 		Categoria cat2 = new Categoria(null, "Escritório");
@@ -96,5 +109,25 @@ public class App2CursomcApplication implements CommandLineRunner {
 
 		clienteRepository.saveAll(Arrays.asList(cli1));
 		enderecoRepository.saveAll(Arrays.asList(e1, e2));
+
+		// ## //
+
+		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+
+		Pedido ped1 = new Pedido(null, sdf.parse("30/09/2017 10:32"), cli1, e1);
+		Pedido ped2 = new Pedido(null, sdf.parse("10/10/2017 19:35"), cli1, e2);
+
+		Pagamento pagto1 = new PagamentoComCartao(null, EstadoPagamento.QUITADO, ped1, 6);
+		ped1.setPagamento(pagto1);
+
+		Pagamento pagto2 = new PagamentoComBoleto(null, EstadoPagamento.PENDENTE, ped2, sdf.parse("10/10/2017 19:35"), null);
+		ped2.setPagamento(pagto2);
+
+		cli1.getPedidos().addAll(Arrays.asList(ped1, ped2));
+
+		pedidoRepository.saveAll(Arrays.asList(ped1, ped2));
+
+		pagamentoRepository.saveAll(Arrays.asList(pagto1, pagto2));
+
 	}
 }

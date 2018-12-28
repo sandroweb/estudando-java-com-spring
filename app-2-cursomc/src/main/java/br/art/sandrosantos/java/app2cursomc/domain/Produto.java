@@ -37,7 +37,6 @@ public class Produto implements Serializable {
 
 	public Produto() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 
 	public Produto(Integer id, String nome, Double preco) {

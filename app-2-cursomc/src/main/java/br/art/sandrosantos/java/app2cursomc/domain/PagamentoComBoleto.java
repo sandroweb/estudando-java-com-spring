@@ -1,6 +1,7 @@
 package br.art.sandrosantos.java.app2cursomc.domain;
 
-import java.sql.Date;
+
+import java.util.Date;
 
 import javax.persistence.Entity;
 
@@ -16,12 +17,11 @@ public class PagamentoComBoleto extends Pagamento {
 
 	public PagamentoComBoleto() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 
-	public PagamentoComBoleto(Integer id, EstadoPagamento estado, Pedido pedido, Date dataVencimento, Date dataPagamento) {
+	public PagamentoComBoleto(Integer id, EstadoPagamento estado, Pedido pedido, Date date, Date dataPagamento) {
 		super(id, estado, pedido);
-		this.dataVencimento = dataVencimento;
+		this.dataVencimento = date;
 		this.dataPagamento = dataPagamento;
 	}
 

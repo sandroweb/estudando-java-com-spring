@@ -28,7 +28,6 @@ public class Estado implements Serializable {
 	
 	public Estado() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 	
 	public Estado(Integer id, String nome) {
