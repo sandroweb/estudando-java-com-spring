@@ -6,6 +6,9 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.MapsId;
+import javax.persistence.OneToOne;
 
 import br.art.sandrosantos.java.app2cursomc.domain.enums.EstadoPagamento;
 
@@ -15,11 +18,13 @@ public class Pagamento implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Integer id;
 	
 	private EstadoPagamento estado;
 
+	@OneToOne
+	@JoinColumn(name="pedido_id")
+	@MapsId
 	private Pedido pedido;
 
 	public Pagamento() {
