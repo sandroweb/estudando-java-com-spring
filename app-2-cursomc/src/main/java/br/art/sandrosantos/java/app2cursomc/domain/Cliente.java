@@ -6,12 +6,17 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import javax.persistence.CollectionTable;
+import javax.persistence.ElementCollection;
+import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 
 import br.art.sandrosantos.java.app2cursomc.domain.enums.TipoCliente;
 
+@Entity
 public class Cliente implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
@@ -23,10 +28,14 @@ public class Cliente implements Serializable {
 	private String email;
 	private String cpfOuCnpj;
 	private Integer tipo;
+
+	@OneToMany(mappedBy="cliente")
 	private List<Endereco> enderecos = new ArrayList<>();
 	
 	// Set é um conjunto que não aceita valores iguais.
 	// Foi criado um Set ao invés de um model específico pois esse model tería somente uma coluna.
+	@ElementCollection
+	@CollectionTable(name="TELEFONE")
 	private Set<String> telefones = new HashSet<>();
 
 	public Cliente() {
